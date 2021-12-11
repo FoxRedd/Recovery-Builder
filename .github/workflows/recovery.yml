@@ -13,12 +13,12 @@ on:
   workflow_dispatch:
 
 env:
-  MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp
-  DEVICE: aresin
-  DT_LINK: https://github.com/mastersenpai0405/twrp_device_poco_F3_GT
-  DT_PATH: device/poco/aresin
-  TARGET: bootimage
-  TZ: Asia/manila
+  MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp_10.0-deprecated
+  DEVICE: X688B
+  DT_LINK: https://github.com/OrangeFoxUnOfficial/recovery_device_infinix_X688B
+  DT_PATH: device/infinix/aresin
+  TARGET: recoveryimage
+  TZ: Asia/Manila
 
 jobs:
   build:
@@ -34,8 +34,8 @@ jobs:
             sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
             docker rmi `docker images -q`
             sudo apt-get remove account-plugin-facebook account-plugin-flickr account-plugin-jabber account-plugin-salut account-plugin-twitter account-plugin-windows-live account-plugin-yahoo aisleriot brltty duplicity empathy empathy-common example-content gnome-accessibility-themes gnome-contacts gnome-mahjongg gnome-mines gnome-orca gnome-screensaver gnome-sudoku gnome-video-effects gnomine landscape-common libreoffice-avmedia-backend-gstreamer libreoffice-base-core libreoffice-calc libreoffice-common libreoffice-core libreoffice-draw libreoffice-gnome libreoffice-gtk libreoffice-impress libreoffice-math libreoffice-ogltrans libreoffice-pdfimport libreoffice-style-galaxy libreoffice-style-human libreoffice-writer libsane libsane-common mcp-account-manager-uoa python3-uno rhythmbox rhythmbox-plugins rhythmbox-plugin-zeitgeist sane-utils shotwell shotwell-common telepathy-gabble telepathy-haze telepathy-idle telepathy-indicator telepathy-logger telepathy-mission-control-5 telepathy-salut totem totem-common totem-plugins printer-driver-brlaser printer-driver-foo2zjs printer-driver-foo2zjs-common printer-driver-m2300w printer-driver-ptouch printer-driver-splix
-            git config --global user.name "mastersenpai05"
-            git config --global user.email "pampangavergil0405@gmail.com"         
+            git config --global user.name "FoxRedd"
+            git config --global user.email "foxr37746@gmail.com"         
             sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
             sudo -E apt-get clean
             sudo -E apt-get -qq update
@@ -49,13 +49,12 @@ jobs:
              cd work
              repo init -u $MANIFEST --depth=1
              repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
-             repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
              git clone --depth=1 $DT_LINK $DT_PATH
              
        - name: Build
          run: |
               cd work
-              . build/envsetup.sh &&lunch twrp_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
+              . build/envsetup.sh &&lunch omni_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
              
        - name: Release recovery image
          uses: softprops/action-gh-release@v1
@@ -65,4 +64,4 @@ jobs:
           tag_name: TWRP_10.0
           name: TEST TWRP-ARESIN
           files: | 
-            work/out/target/product/aresin/boot.img
+            work/out/target/product/X688B/recovery.img
