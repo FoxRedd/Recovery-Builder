@@ -14,7 +14,7 @@ on:
 
 env:
   MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp
-  DEVICE: X688B
+  DEVICE: begonia
   DT_LINK: https://github.com/OrangeFoxUnOfficial/twrp_redmi_begonia -b android-11.0
   DT_PATH: device/redmi/begonia
   TARGET: recoveryimage
